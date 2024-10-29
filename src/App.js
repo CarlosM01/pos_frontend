@@ -1,16 +1,26 @@
 // src/App.js
 import React from 'react';
-import Formulario from './components/Formulario';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <h1>Mi Aplicación React</h1>
-      <Formulario />
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/Profile" element={<Profile />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

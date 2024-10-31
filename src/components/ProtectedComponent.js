@@ -1,36 +1,18 @@
-// src/components/ProtectedComponent.js
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import useAuth from '../hooks/useAuth';
 
 function ProtectedComponent() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    fetch('http://localhost:8080/auth/profile', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}` // Envía el token en el encabezado de autorización
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      setData(data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-  }, []);
+  const { data, loading } = useAuth(); // Usa el hook
 
   return (
     <div>
-      {data ? (
+      {loading ? (
+        <p>Cargando...</p>
+      ) : (
         <div>
           <h1>Datos Protegidos</h1>
           <p>{JSON.stringify(data)}</p>
         </div>
-      ) : (
-        <p>Cargando...</p>
       )}
     </div>
   );

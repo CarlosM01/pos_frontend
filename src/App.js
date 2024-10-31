@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import NavBarUser from './components/NavBarUser';
 import NavBarAdmin from './components/NavBarAdmin';
 import NavBarGuest from './components/NavBarGuest';
@@ -7,23 +6,11 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
+import useAuth from './hooks/useAuth'; // Importa el hook
 
 function App() {
-  const [role, setRole] = useState(null);
+  const { role, loading } = useAuth(); // Usa el hook
 
-  // Verifica el token y el rol del usuario al cargar la app
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const userRole = localStorage.getItem('role'); // Ej: 'admin', 'user'
-
-    if (token && userRole) {
-      setRole(userRole);
-    } else {
-      setRole('guest'); // Usuario no autenticado
-    }
-  }, []);
-
-  // Elige la barra de navegación basada en el rol
   const getNavBar = () => {
     switch (role) {
       case 'admin':
@@ -34,6 +21,10 @@ function App() {
         return <NavBarGuest />;
     }
   };
+
+  if (loading) {
+    return <div>Cargando...</div>; // Indicador de carga
+  }
 
   return (
     <Router>

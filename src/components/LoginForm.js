@@ -28,6 +28,7 @@ function LoginForm() {
       console.log('Login Success:', data);
       localStorage.setItem('token', data.token); // Almacena el token
       navigate('/profile'); // Redirecciona a /dashboard
+      window.location.reload();
     })
     .catch((error) => {
       console.error('Error:', error);

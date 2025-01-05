@@ -16,7 +16,7 @@ function LoginForm() {
       password: password
     };
 
-    fetch('http://localhost:8080/auth/login', {
+    fetch('http://localhost:8080/user/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -26,8 +26,8 @@ function LoginForm() {
     .then(response => response.json())
     .then(data => {
       console.log('Login Success:', data);
-      localStorage.setItem('token', data.token); // Almacena el token
-      navigate('/profile'); // Redirecciona a /dashboard
+      localStorage.setItem('token', data.token); // Store the token
+      navigate('/profile'); // Redirect to dashboard
       window.location.reload();
     })
     .catch((error) => {

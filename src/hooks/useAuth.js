@@ -13,7 +13,7 @@ const useAuth = () => {
       return;
     }
 
-    fetch('http://localhost:8080/auth/profile', {
+    fetch('http://localhost:8080/user/profile', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

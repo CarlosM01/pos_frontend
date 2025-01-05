@@ -6,10 +6,10 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import useAuth from './hooks/useAuth'; // Importa el hook
+import useAuth from './hooks/useAuth'; // Import the hook
 
 function App() {
-  const { role, loading } = useAuth(); // Usa el hook
+  const { role, loading } = useAuth(); // Use the hook
 
   const getNavBar = () => {
     switch (role) {
@@ -23,7 +23,7 @@ function App() {
   };
 
   if (loading) {
-    return <div>Cargando...</div>; // Indicador de carga
+    return <div>Loading...</div>; // Loading indicator
   }
 
   return (

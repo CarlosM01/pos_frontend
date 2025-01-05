@@ -13,6 +13,7 @@ function NavBar() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/cart">Cart</Nav.Link>
+            <Nav.Link href="/profile">Profile</Nav.Link>
             <Nav.Link href="/" onClick={logout}>logout</Nav.Link>
           </Nav>
         </Navbar.Collapse>

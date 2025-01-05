@@ -3,6 +3,7 @@ import { Container, Form, Button, Alert } from 'react-bootstrap';
 
 function RegisterForm() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [rejected, setRejected] = useState(false);
@@ -14,10 +15,12 @@ function RegisterForm() {
     if (password === confirmPassword) {
       const data = {
         username: username,
+        email: email,
         password: password
       };
+      console.log(data)
 
-      fetch('http://localhost:8080/auth/register', {
+      fetch('http://localhost:8080/user/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -28,8 +31,9 @@ function RegisterForm() {
       .then(data => {
         console.log('Success:', data);
         setSuccessful(true);
-        setRejected(false); // Ocultar alerta de error en caso de éxito
+        setRejected(false); // Hide error alert on success
         setUsername('');
+        setEmail('');
         setPassword('');
         setConfirmPassword('');
       })
@@ -37,8 +41,8 @@ function RegisterForm() {
         console.error('Error:', error);
       });
     } else {
-      setRejected(true);  // Mostrar alerta cuando las contraseñas no coinciden
-      setSuccessful(false); // Ocultar alerta de éxito en caso de error
+      setRejected(true);  // Show alert when passwords do not match
+      setSuccessful(false); // Hide success alert on error
     }
   };
 
@@ -46,16 +50,16 @@ function RegisterForm() {
     <Container>
       {rejected && (
         <Alert variant="danger" onClose={() => setRejected(false)} dismissible>
-          Las contraseñas no coinciden. Por favor, inténtalo de nuevo.
+          Passwords do not match. Please try again.
         </Alert>
       )}
       {successful && (
         <Alert variant="success" onClose={() => setSuccessful(false)} dismissible>
-          Usuario registrado con éxito.
+          Successfully registered user.
         </Alert>
       )}
       <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
@@ -63,10 +67,20 @@ function RegisterForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-          
         </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="example@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </Form.Group>
+
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Contraseña</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Contraseña"
@@ -74,8 +88,9 @@ function RegisterForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
+
         <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-          <Form.Label>Confirmar Contraseña</Form.Label>
+          <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Contraseña"
@@ -83,8 +98,9 @@ function RegisterForm() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </Form.Group>
+
         <Button variant="primary" type="submit">
-          Enviar
+          Send
         </Button>
       </Form>
     </Container>
